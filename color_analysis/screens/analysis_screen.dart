@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:myntra/color_analysis.dart';
 import 'package:myntra/screens/try_colors.dart';
@@ -5,7 +6,9 @@ import 'package:myntra/screens/view_outfits.dart';
 import 'package:myntra/styling.dart';
 
 class SeasonalColorAnalysisScreen extends StatelessWidget {
-  const SeasonalColorAnalysisScreen({super.key});
+  final File imageFile;
+  
+  const SeasonalColorAnalysisScreen({super.key,required this.imageFile});
 
   @override
   Widget build(BuildContext context) {
@@ -217,10 +220,10 @@ class SeasonalColorAnalysisScreen extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const TryColorsScreen()),
-                  );
+                   Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TryColorsScreen(imageFile: imageFile)),
+                    );
                 },
                 child: const Text('Try Colors on Me!'),
               ),
