@@ -24,6 +24,8 @@ class _Camera extends State<Camera> {
   late List<CameraDescription> cameras;
   bool isUsingFrontCamera = false;
   String? foreheadHex, leftCheekHex, rightCheekHex, chinHex, jawlineHex;
+  File? _selectedImageFile;
+
 
   @override
   void initState() {
@@ -39,7 +41,9 @@ class _Camera extends State<Camera> {
     // Wait for camera controller to initialize
     await _controller!.initialize();
     // Set state for preview UI rebuilding
-    setState(() {});
+    setState(() {
+
+    });
   }
 
   Future<void> initializeCamera() async {
@@ -134,6 +138,7 @@ class _Camera extends State<Camera> {
 
           setState(() {
             _image = pic;
+            _selectedImageFile = imageFile;
             foreheadHex = _colorToHex(foreheadColor);
             leftCheekHex = _colorToHex(leftCheekColor);
             rightCheekHex = _colorToHex(rightCheekColor);
@@ -146,6 +151,7 @@ class _Camera extends State<Camera> {
       }
     }
   }
+
 
   Color _getRegionColor(File imageFile, Rect faceRect, String region) {
     var image = img.decodeImage(imageFile.readAsBytesSync());
@@ -249,7 +255,8 @@ class _Camera extends State<Camera> {
                   padding: const EdgeInsets.all(8.0),
                   child: Image.file(File(_image!.path)),
                 ),
-                if (foreheadHex != null &&
+                if (_selectedImageFile != null && 
+                    foreheadHex != null &&
                     leftCheekHex != null &&
                     rightCheekHex != null &&
                     chinHex != null &&
@@ -279,12 +286,22 @@ class _Camera extends State<Camera> {
                       const SizedBox(height: 10,),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const SeasonalColorAnalysisScreen()),
-                          );
+                          if (_selectedImageFile != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SeasonalColorAnalysisScreen(imageFile: _selectedImageFile!)),
+                            );
+                          } else {
+                          // Handle case where no image is selected yet
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Please take a picture first.'),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                          }
                         }, 
-                        child: const Text('View my Detailed Color Analysis')
+                        child: const Text('View my Detailed Color Analysis'),
                       ),
                     ],
                   ),
