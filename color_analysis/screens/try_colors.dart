@@ -1,11 +1,12 @@
-// ignore_for_file: library_private_types_in_public_api
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:myntra/color_analysis.dart';
 
-
 class TryColorsScreen extends StatefulWidget {
-  const TryColorsScreen({super.key});
+  final File imageFile;
+
+  const TryColorsScreen({super.key, required this.imageFile});
 
   @override
   _TryColorsScreenState createState() => _TryColorsScreenState();
@@ -29,8 +30,8 @@ class _TryColorsScreenState extends State<TryColorsScreen> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(
-              'assets/girl.jpg',
+            child: Image.file(
+              widget.imageFile,
               fit: BoxFit.cover,
             ),
           ),
