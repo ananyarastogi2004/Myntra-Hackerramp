@@ -1,5 +1,11 @@
 # Myntra-Hackerramp
 
+# Data Source and Preparation
+
+For the sample data and model training, we utilized Kaggle's [Myntra Fashion Product Dataset](https://www.kaggle.com/datasets/djagatiya/myntra-fashion-product-dataset). We cleaned the dataset and extracted the relevant columns to suit our requirements. 
+
+Focusing on the GenZ demographic, we selected specific product categories and added additional columns such as `occasion` and `fabric` to enhance our features. The refined dataset was then converted into an SQLite database to integrate seamlessly with our application.
+
 # Seasonal Colour Analysis
 Inspired by the popular trend of seasonal color analysis among Gen Z, fueled by social media influencers we thought of creating a tool that performs a detailed colour analysis for free and then provide personalized recommendations to the users according to the analysis.Seasonal Color analysis is a method that’s used to determine which colors look best with a person's natural skin colour by categorizing them into one of four seasonal colour palettes.
 
